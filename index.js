@@ -7,11 +7,9 @@ const urlMap = new Map();
 
 app.post('/shorten', async (req, res) => {
     const { original } = req.body;
-    if (!original || !isValidUrl(original)) {
-        return res.status(400).json({ error: 'Valid URL required' });
-    }
+    if (!original || !isValidUrl(original)) return res.status(400).json({ error: 'Valid URL required' });
     const shortId = Math.random().toString(36).substring(2, 8);
-    const short = `https://${req.get('host')}/${shortId}`;
+    const short = `https://${req.get('host')}/${shortId}`; // Uses deployed domain
     urlMap.set(shortId, original);
     res.json({ short });
 });
